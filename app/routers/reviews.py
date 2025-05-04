@@ -41,13 +41,16 @@ async def all_reviews(db: Annotated[AsyncSession, Depends(get_db)]):
 @router.get('/{product_slug}')
 async def products_reviews(db: Annotated[AsyncSession, Depends(get_db)], product_slug: str):
     review = await db.scalars(select(Review).join(Review.products).where(Product.slug == product_slug))
-    if review is None:
+
+    response = review.all()
+
+    if not response:
         raise HTTPException(
             status_code=status.HTTP_404_NOT_FOUND,
             detail='There is no product found'
         )
 
-    return review.all()
+    return response
 
 
 @router.post('/', status_code=status.HTTP_201_CREATED)
