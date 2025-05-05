@@ -2,7 +2,6 @@ from fastapi import APIRouter, Depends, status, HTTPException, Path
 from sqlalchemy.ext.asyncio import AsyncSession
 from typing import Annotated
 from sqlalchemy import insert, select
-from sqlalchemy.orm import selectinload
 from sqlalchemy.sql import func
 
 from app.backend.db_depends import get_db
